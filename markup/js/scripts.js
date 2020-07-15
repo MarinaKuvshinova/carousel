@@ -89,6 +89,7 @@ pagination();
 
 btnLeft.addEventListener('click', () => {
     const last = slideset.lastChild;
+    btnLeft.disabled = true;
     document.querySelectorAll(".pagination li").forEach(elem => {
         elem.classList.remove('active');
         if (+last.getAttribute("tabset") === +elem.textContent) elem.className = "active";
@@ -98,11 +99,15 @@ btnLeft.addEventListener('click', () => {
     slideset.style.transform = `translate3d(-${carousel.offsetWidth/number}px, 0, 0)`;
     slideset.prepend(last);
     setTimeout(() => {
+        setTimeout(()=> {
+            btnLeft.disabled = false;
+        },1000);
         slideset.style.transition = 'all 1s';
         handleClick(carousel.offsetWidth/number);
     });
 });
 btnRight.addEventListener('click', () => {
+    btnRight.disabled = true;
     handleClick(-carousel.offsetWidth/number);
     const first = slideset.firstChild;
     document.querySelectorAll(".pagination li").forEach(elem => {
@@ -117,7 +122,8 @@ btnRight.addEventListener('click', () => {
         slideset.style.transition = 'none';
         slideset.style.transform = 'translate3d(0, 0, 0)';
         slideset.appendChild(first);
-    },2000);
+        btnRight.disabled = false;
+    },1000);
     slideset.style.transition = 'all 1s';
 
 });
